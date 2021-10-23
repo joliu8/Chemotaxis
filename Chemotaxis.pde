@@ -1,65 +1,86 @@
 //declare bacteria variables here  
-Bacteria buster;
-Bacteria [] bunch = new Bacteria [5];
+PImage img;
+Bacteria [] bunch = new Bacteria [20];
+Water [] river = new Water[100];
 void setup()   
 {     
   //initialize bacteria variables here
-  buster = new Bacteria();
-  size(500, 500);
-  ////for (int i = 0; i < bunch.length; i++) {
-  ////  bunch[i] = new Bacteria();
-  //}
+  size(700, 500);
+  fill (0);
+  for (int i = 0; i < bunch.length; i++) {
+    bunch[i] = new Bacteria();
+  }
+  for (int i = 0; i < river.length; i++) {
+    river[i] = new Water();
+  }
+
+
+  img = loadImage("realduck.png");
 }   
 void draw()   
 {    
-  //move and show the bacteria
-  background(150, 219, 145);
-  buster.show();
-  buster.follow();
-  //buster.walk();
-  //for (int i =0; i<bunch.length; i++) {
-  //  bunch[i].walk();
-  //  bunch[i].show();
-  //}
-}  
-class Bacteria    
-{     
-  int myX, myY, bacteriaColor; //member variables
+  background(166, 219, 222);
+  
+  for (int i =0; i < river.length; i++) {
+    river[i].show();
+    river[i].walk();
+  }
 
-  Bacteria() { //class constructor
-    myX = 100;
-    myY = 100;
-    //bacteriaColor = color(217, 252, 252, 30);
-    bacteriaColor = color(0);
+  textSize(20);
+  fill(255, 0, 0);
+  
+  for (int i =0; i<bunch.length; i++) {
+    bunch[i].show();
+    bunch[i].follow();
+  }
+}
+
+class Water
+{
+  int myX, myY; //member variables
+
+  Water() { //class constructor
+    myX = 0;
+    myY = 0;
   }
 
   void walk() {
-    myX = myX + (int)(Math.random()*10)-3;
-    myY = myY + (int)(Math.random()*10)-3;
+    myX = myX + (int)(Math.random()*15)-3;
+    myY = myY + (int)(Math.random()*15)-3;
   }
 
   void show() {
     stroke(188, 230, 230);
-    fill (bacteriaColor);
+    fill (252, 213, 83);
     ellipse(myX, myY, 50, 50);
-    
+  }
+}
+
+class Bacteria    
+{     
+  int myX, myY;
+
+  Bacteria() {
+    myX = 250;
+    myY = 350;
+  }
+
+  void show() {
     //duck
-    
-    
-    //ducklings 
+    image(img, myX, myY, 80, 80);
   }
 
   void follow() {
-    if (mouseX - myX >= 0) 
+    if (mouseX - myX >= 10) 
       myX = myX + (int)(Math.random()*10)+5;
 
-    if (mouseX - myX <= 0) 
+    if (mouseX - myX <= -10) 
       myX = myX + (int)(Math.random()*10)-15;
 
-    if (mouseY - myY >= 0) 
+    if (mouseY - myY >= 10) 
       myY = myY + (int)(Math.random()*10)+5;
 
-    if (mouseY - myY <= 0) 
+    if (mouseY - myY <= -10) 
       myY = myY + (int)(Math.random()*10)-15;
   }
 }
